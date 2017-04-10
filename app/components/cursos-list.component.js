@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/router", "../services/curso.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,8 +10,8 @@ System.register(["angular2/core", "angular2/router"], function(exports_1, contex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1;
-    var RestaurantesListComponent;
+    var core_1, router_1, curso_service_1;
+    var CursosListComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -19,47 +19,48 @@ System.register(["angular2/core", "angular2/router"], function(exports_1, contex
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (curso_service_1_1) {
+                curso_service_1 = curso_service_1_1;
             }],
         execute: function() {
-            RestaurantesListComponent = (function () {
-                function RestaurantesListComponent(_restauranteService) {
-                    this._restauranteService = _restauranteService;
-                    this.titulo = "Listado de restaurantes:";
+            CursosListComponent = (function () {
+                function CursosListComponent(_cursoService) {
+                    this._cursoService = _cursoService;
+                    this.titulo = "Listado de cursos:";
                 }
-                RestaurantesListComponent.prototype.ngOnInit = function () {
-                    this.getRestaurantes();
-                    console.log("restaurantes-list component cargado");
+                CursosListComponent.prototype.ngOnInit = function () {
+                    this.getCursos();
+                    console.log("cursos-list component cargado");
                 };
-                RestaurantesListComponent.prototype.getRestaurantes = function () {
+                CursosListComponent.prototype.getCursos = function () {
                     var _this = this;
-                    var box_restaurantes = document.querySelector("#restaurantes-list .loading");
-                    box_restaurantes.style.visibility = "visible";
-                    this._restauranteService.getRestaurantes().subscribe(function (result) {
-                        _this.restaurantes = result.data;
+                    this._cursoService.getCursos().subscribe(function (result) {
+                        _this.cursos = result.data;
                         _this.status = result.status;
                         if (_this.status !== "success") {
-                            alert("Error en el servidor");
+                            alert("ERROR EN EL SERVIDOR");
                         }
-                        box_restaurantes.style.display = "none";
                     }, function (error) {
                         _this.errorMessage = error;
-                        if (_this.errorMessage)
-                            ;
-                        alert("Error en la petición");
+                        if (_this.errorMessage !== null) {
+                            console.log(_this.errorMessage);
+                            alert("ERROR EN LA PETICIÓN");
+                        }
                     });
                 };
-                RestaurantesListComponent = __decorate([
+                CursosListComponent = __decorate([
                     core_1.Component({
-                        selector: "restaurantes-list",
-                        templateUrl: "app/view/restaurantes-list.html",
+                        selector: "curso-list",
+                        templateUrl: "app/view/curso-list.html",
                         directives: [router_1.ROUTER_DIRECTIVES],
-                        providers: [RestauranteService]
+                        providers: [curso_service_1.CursoService]
                     }), 
-                    __metadata('design:paramtypes', [Object])
-                ], RestaurantesListComponent);
-                return RestaurantesListComponent;
+                    __metadata('design:paramtypes', [curso_service_1.CursoService])
+                ], CursosListComponent);
+                return CursosListComponent;
             }());
-            exports_1("RestaurantesListComponent", RestaurantesListComponent);
+            exports_1("CursosListComponent", CursosListComponent);
         }
     }
 });

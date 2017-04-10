@@ -10,7 +10,7 @@ export class CursoService{
   }
 
   getCursos(){
-    return this._http.get("http://localhost/slim/api-rest.php/cursos")
+    return this._http.get("http://localhost/slim/api.php/cursos")
                       .map(res => res.json());
   }
 }

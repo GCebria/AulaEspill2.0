@@ -12,8 +12,13 @@ System.register(["angular2/core", "rxjs/add/operator/map"], function(exports_1, 
         execute: function() {
             core_1.Injectable();
             CursoService = (function () {
-                function CursoService() {
+                function CursoService(_http) {
+                    this._http = _http;
                 }
+                CursoService.prototype.getCursos = function () {
+                    return this._http.get("http://localhost/slim/api.php/cursos")
+                        .map(function (res) { return res.json(); });
+                };
                 return CursoService;
             }());
             exports_1("CursoService", CursoService);
