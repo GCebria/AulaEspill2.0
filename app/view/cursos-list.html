@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-sm-6" *ngFor="#curso of cursos">
     <a href="assets/img/portfolio/fullsize/1.jpg" class="portfolio-box">
-        <img src="{{curso.foto}}" class="img-fluid" alt="">
+        <img [src]="curso.foto" class="img-fluid" alt="">
         <div class="portfolio-box-caption">
             <div class="portfolio-box-caption-content">
                 <div class="project-name">
