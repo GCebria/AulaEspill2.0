@@ -6,5 +6,11 @@ import {Curso} from "../model/curso";
 
 Injectable()
 export class CursoService{
-  
+  constructor(private _http:Http){
+  }
+
+  getCursos(){
+    return this._http.get("http://localhost/slim/api-rest.php/cursos")
+                      .map(res => res.json());
+  }
 }

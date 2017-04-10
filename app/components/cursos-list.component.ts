@@ -4,47 +4,45 @@ import {CursoService} from "../services/curso.service";
 import {Curso} from "../model/curso";
 
 @Component({
-  selector: "restaurantes-list",
-  templateUrl: "app/view/restaurantes-list.html",
+  selector: "curso-list",
+  templateUrl: "app/view/curso-list.html",
   directives: [ROUTER_DIRECTIVES],
-  providers: [RestauranteService]
+  providers: [CursoService]
 })
 
-export class RestaurantesListComponent implements OnInit{
-  public titulo:string ="Listado de restaurantes:";
-  public restaurantes: Restaurante[];
-  public status:string;
-  public errorMessage;
+export class CursosListComponent implements OnInit{
+  public titulo:string ="Listado de cursos:";
+  public cursos: Curso[];
+  public status: string;
+  public errorMessage: string;
 
-
-  constructor(private _restauranteService: RestauranteService){}
+  constructor(private _cursoService: CursoService){}
 
   ngOnInit(){
-    this.getRestaurantes();
-    console.log("restaurantes-list component cargado");
+    this.getCursos();
+    console.log("cursos-list component cargado");
+
   }
 
-  getRestaurantes(){
-    let box_restaurantes= <HTMLElement>document.querySelector("#restaurantes-list .loading");
-    box_restaurantes.style.visibility ="visible";
-    this._restauranteService.getRestaurantes().subscribe(
-        result => {
-          this.restaurantes=result.data;
-          this.status = result.status;
+  getCursos(){
+      this._cursoService.getCursos().subscribe(
+          result =>{
+              this.cursos = result.data
+              this.status = result.status;
 
-          if(this.status !== "success"){
-            alert("Error en el servidor");
+              if(this.status!=="success"){
+                alert("ERROR EN EL SERVIDOR");
+              }
+          },
+          error =>{
+            this.errorMessage = <any>error;
+            if(this.errorMessage !== null){
+              console.log(this.errorMessage);
+              alert("ERROR EN LA PETICIÓN");
+            }
           }
-          box_restaurantes.style.display ="none";
-        },
-        error=> {
-          this.errorMessage = <any>error;
-          if(this.errorMessage);
-          alert("Error en la petición");
-        }
-    );
-
-
+      );
   }
+
 
 }
